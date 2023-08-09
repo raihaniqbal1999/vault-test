@@ -1,0 +1,107 @@
+name: Vault Creation
+on:
+ workflow_dispatch:
+    inputs:
+      Team_Name:
+        description: Terraform Workspaces
+        required: false
+        #default: devsecops-test
+        type: choice
+        options:
+        - dso-sandbox
+        - dso-test
+        - dso-test-demo
+        - devsecops-test
+        - learning
+        - devsecops
+        - cloudops
+        - kip-prod
+        - kip-uat
+        - conn-tech-sbox
+        - tax-client
+        - informatica
+        - icas
+        - culture-snap
+        - pxcube
+        - modelling
+        - fmmicros
+        - chrisastley
+        - ukfmtis
+        - tax-technology
+        - enterprise-bey
+        - digital-uk
+        - ctc-portal
+        - helios
+        - btmobile
+        - pccportal
+        - tax-coe-b2c
+        - fizznunwood
+        - culture-snap-dev
+        - kclientazure
+      
+      task:
+        description: Task to be done 
+        required: false
+        #default: deploy
+        type: choice
+        options:
+        - deploy
+
+      region:
+        description: Region to be selected
+        #required: false
+        default: uk-south
+        type: choice
+        options:
+        - uk-south
+        - uk-west
+      
+      location:
+        description: Location to be selected
+        #required: false
+        default: UK South
+        type: choice
+        options:
+        - UK South
+        - UK West
+
+      Subscription_Name:
+        description: Name of the Subscription
+        required: false
+
+      Subscription_Id:
+        description: Subscription Id
+        required: true
+     
+      Tenant_Id:
+        description: Tenant Id
+        required: true
+
+      
+        
+jobs:
+  deploy:
+    name: vault-creation
+    runs-on: pcoe-runner-linux-prod
+    environment: vault-creation
+
+    permissions:
+      id-token: write
+      contents: read
+      pull-requests: write
+      issues: write
+
+    steps:
+
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Echo paramters
+      run: |
+           echo ${{inputs.Tenant_Id}}
+           echo ${{inputs.Team_Name}}
+           echo ${{inputs.region}}
+           echo ${{inputs.location}}
+           
+          
+    
